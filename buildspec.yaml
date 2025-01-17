@@ -7,6 +7,8 @@ phases:
     commands:
       - echo "Installing dependency scanning tools..."
       - npm install -g npm-audit-resolver snyk
+      - - echo "Authenticating with Snyk..."
+      - snyk auth 8e4f1d25-4bc5-42ca-8500-b02f1e77e166
 
   pre_build:
     commands:
