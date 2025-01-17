@@ -3,19 +3,25 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 20
     commands:
-      - echo "Install phase jjj"
-      - npm install
+      - echo "Installing dependency scanning tools..."
+      - npm install -g npm-audit-resolver snyk
+
+  pre_build:
+    commands:
+      - echo "Running dependency vulnerability scans..."
+      - npm audit --json > audit-results.json || true
+      - snyk test --severity-threshold=high || true
 
   build:
     commands:
-      - echo "Build phase kkkk"
-      # - npm run build
+      - echo "Analyzing scan results..."
+      - node analyze-audit.js # Script to fail the build if critical issues exist.
 
-      # Additional build commands if needed
-
+  post_build:
+    commands:
+      - echo "Build completed."
 artifacts:
   files:
-    - '**/*'
- # base-directory: dist
+    - audit-results.json
