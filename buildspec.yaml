@@ -5,11 +5,13 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
+      - echo "Install phase jjj"
       - npm install
 
   build:
     commands:
-      #- npm run build
+      - echo "Build phase kkkk"
+      - npm run build
 
       # Additional build commands if needed
 
